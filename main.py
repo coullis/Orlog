@@ -1,4 +1,5 @@
 import pygame
+import myLib as ml
 from os import environ
 from sys import exit
 import random
@@ -12,10 +13,6 @@ d6 = ["axe", "axe", "farrow", "field", "helmet", "steal"]
 
 p1cup = ["d1", "d2", "d3", "d4", "d5", "d6"]
 
-#for x in p1cup:
-#    print(random.choice(x))
-#
-#print(random.choice(d1))
 
 pygame.init()
 environ['SDL_VIDEO_WINDOW_POS'] = f"{990},{-1200}"
@@ -26,24 +23,14 @@ clock = pygame.time.Clock()
 # GRAPHICS ===========================================================================================================
 bg_img = pygame.image.load("graphics/bg.jpg").convert_alpha()
 exit_img = pygame.image.load("graphics/exit.png").convert_alpha()
+play_img = pygame.image.load("graphics/play.png").convert_alpha()
 
-# CLASSES =============================================================================================================
-
-
-class Button():
-    def __init__(self, x, y, image, s):
-        self.image = image
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
-        self.image = pygame.transform.scale_by(self.image, s)
-
-    def draw(self):
-        screen.blit(self.image, (self.rect.x, self.rect.y))
 
 # BUTTON INSTANCES ====================================================================================================
 
 
-exit_button = Button(1820, 20, exit_img, 0.2)
+exit_button = ml.Button(1870, 10, exit_img, 0.1)
+play_button = ml.Button(40, 40, play_img, 0.5)
 
 
 # GAME LOOP ===========================================================================================================
@@ -57,9 +44,17 @@ while True:
             if event.key == pygame.K_ESCAPE:
                 exit()
 
+    if exit_button.draw():
+        exit()
+
+    if play_button.draw():
+        play_button.active = False
+        ml.roll() #fix
+
     pygame.display.update()
     clock.tick(60)
 
     screen.blit(bg_img, (0, 0))
 
-    exit_button.draw()
+
+
