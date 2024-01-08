@@ -18,8 +18,8 @@ p1cup = ["d1", "d2", "d3", "d4", "d5", "d6"]
 #print(random.choice(d1))
 
 pygame.init()
-environ['SDL_VIDEO_WINDOW_POS'] = f"{973},{-1200}"
-screen = pygame.display.set_mode((1920, 1200), pygame.SCALED)
+environ['SDL_VIDEO_WINDOW_POS'] = f"{990},{-1200}"
+screen = pygame.display.set_mode((1920, 1200), pygame.FULLSCREEN)
 pygame.display.set_caption("Orlog")
 clock = pygame.time.Clock()
 
@@ -43,7 +43,7 @@ class Button():
 # BUTTON INSTANCES ====================================================================================================
 
 
-exit_button = Button(1800, 100, exit_img, 0.2)
+exit_button = Button(1820, 20, exit_img, 0.2)
 
 
 # GAME LOOP ===========================================================================================================
