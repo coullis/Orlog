@@ -28,13 +28,6 @@ class Button():
 
         return action
 
-def roll():
-    pressed = pygame.key.get_pressed()
-    cup_img = pygame.image.load("graphics/cup.png").convert_alpha()
-    run = True
-    while run:
-        if pressed[pygame.K_SPACE]:
-            screen.blit(cup_img, (100, 100))
 
 
 

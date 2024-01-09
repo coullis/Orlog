@@ -24,16 +24,22 @@ clock = pygame.time.Clock()
 bg_img = pygame.image.load("graphics/bg.jpg").convert_alpha()
 exit_img = pygame.image.load("graphics/exit.png").convert_alpha()
 play_img = pygame.image.load("graphics/play.png").convert_alpha()
-
+cup_img = pygame.image.load("graphics/cup.png").convert_alpha()
 
 # BUTTON INSTANCES ====================================================================================================
-
-
 exit_button = ml.Button(1870, 10, exit_img, 0.1)
 play_button = ml.Button(40, 40, play_img, 0.5)
+cup_sprite = ml.Button(100, 500, cup_img, 0.5)
+
+
+# FUNCTIONS ===========================================================================================================
+
+#def roll():
+    #TODO
 
 
 # GAME LOOP ===========================================================================================================
+screen.blit(bg_img, (0, 0))
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -49,12 +55,12 @@ while True:
 
     if play_button.draw():
         play_button.active = False
-        ml.roll() #fix
+        #roll()
 
     pygame.display.update()
     clock.tick(60)
 
-    screen.blit(bg_img, (0, 0))
+
 
 
 
