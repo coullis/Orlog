@@ -22,6 +22,7 @@ clock = pygame.time.Clock()
 # GAME LOOP ===========================================================================================================
 
 while True:
+    drawAll = [[ml.bg_img, (0, 0)], [ml.exit_button.image, (1870, 10)]]
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -31,16 +32,16 @@ while True:
             if event.key == pygame.K_ESCAPE:
                 exit()
 
-    screen.blit(ml.bg_img, (0, 0))
-
-    if ml.exit_button.draw():
+    ml.exit_button.draw()
+    if ml.exit_button.clicked:
         exit()
 
-    if ml.play_button.draw():
-        ml.play_button.active = False
+    if not ml.play_button.clicked:
+        drawAll.append(ml.play_button.draw())
+    else:
+        drawAll.append(ml.roll())
 
-    if not ml.play_button.active:
-        ml.roll()
-
+    for x in drawAll:
+        screen.blit(x[0], x[1])
     pygame.display.update()
     clock.tick(60)

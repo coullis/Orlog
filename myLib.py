@@ -19,23 +19,17 @@ class Button:
         self.rect.topleft = (x, y)
         self.image = pygame.transform.scale_by(self.image, s)
         self.clicked = False
-        self.active = True
 
     def draw(self):
-        action = False
-        if self.active:
-            pos = pygame.mouse.get_pos()
-            if self.rect.collidepoint(pos):
-                if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                    self.clicked = True
-                    action = True
+        pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] == 1 and not self.clicked:
+                self.clicked = True
 
             if pygame.mouse.get_pressed()[0] == 0:
                 self.clicked = False
 
-            screen.blit(self.image, (self.rect.x, self.rect.y))
-
-        return action
+        return [self.image, (self.rect.x, self.rect.y)]
 
 
 # BUTTON INSTANCES ====================================================================================================
@@ -44,20 +38,19 @@ play_button = Button(40, 40, play_img, s=0.5)
 cup_sprite = Button(100, 500, cup_img, s=0.5)
 fcup_sprite = Button(100, 500, fcup_img, s=0.5)
 
+
 # FUNCTIONS ===========================================================================================================
 
 
 def roll():
     keys = pygame.key.get_pressed()
     if keys[pygame.K_SPACE]:
-        cup_sprite.draw()
-        pygame.display.update()
-        pygame.time.wait(500)
-        screen.blit(bg_img, (0, 0))
-        exit_button.draw()
-        fcup_sprite.draw()
-        pygame.display.update()
-        pygame.time.wait(500)
-
-
-
+        return cup_sprite.draw()
+    return exit_button.draw()
+    """pygame.display.update()
+    pygame.time.wait(500)
+    screen.blit(bg_img, (0, 0))
+    exit_button.draw()
+    fcup_sprite.draw()
+    pygame.display.update()
+    pygame.time.wait(500)"""
