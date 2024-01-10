@@ -13,33 +13,14 @@ d6 = ["axe", "axe", "farrow", "field", "helmet", "steal"]
 
 p1cup = ["d1", "d2", "d3", "d4", "d5", "d6"]
 
-
 pygame.init()
 environ['SDL_VIDEO_WINDOW_POS'] = f"{990},{-1200}"
 screen = pygame.display.set_mode((1920, 1200), pygame.FULLSCREEN)
 pygame.display.set_caption("Orlog")
 clock = pygame.time.Clock()
 
-# GRAPHICS ===========================================================================================================
-bg_img = pygame.image.load("graphics/bg.jpg").convert_alpha()
-exit_img = pygame.image.load("graphics/exit.png").convert_alpha()
-play_img = pygame.image.load("graphics/play.png").convert_alpha()
-cup_img = pygame.image.load("graphics/cup.png").convert_alpha()
-
-# BUTTON INSTANCES ====================================================================================================
-exit_button = ml.Button(1870, 10, exit_img, 0.1)
-play_button = ml.Button(40, 40, play_img, 0.5)
-cup_sprite = ml.Button(100, 500, cup_img, 0.5)
-
-
-# FUNCTIONS ===========================================================================================================
-
-#def roll():
-    #TODO
-
-
 # GAME LOOP ===========================================================================================================
-screen.blit(bg_img, (0, 0))
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -50,17 +31,16 @@ while True:
             if event.key == pygame.K_ESCAPE:
                 exit()
 
-    if exit_button.draw():
+    screen.blit(ml.bg_img, (0, 0))
+
+    if ml.exit_button.draw():
         exit()
 
-    if play_button.draw():
-        play_button.active = False
-        #roll()hlkjghskdjgh
+    if ml.play_button.draw():
+        ml.play_button.active = False
+
+    if not ml.play_button.active:
+        ml.roll()
 
     pygame.display.update()
     clock.tick(60)
-
-
-
-
-
