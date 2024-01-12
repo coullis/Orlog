@@ -1,8 +1,13 @@
 import pygame
-import time
+import random
 
-screen = pygame.display.set_mode((1920, 1200), pygame.FULLSCREEN)
+pygame.init()
+width = pygame.display.Info().current_w
+height = pygame.display.Info().current_h
+screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
+pygame.display.set_caption("Orlog")
 clock = pygame.time.Clock()
+cup = 1
 
 # GRAPHICS ===========================================================================================================
 bg_img = pygame.image.load("graphics/bg.jpg").convert_alpha()
@@ -10,6 +15,7 @@ exit_img = pygame.image.load("graphics/exit.png").convert_alpha()
 play_img = pygame.image.load("graphics/play.png").convert_alpha()
 cup_img = pygame.image.load("graphics/cup.png").convert_alpha()
 fcup_img = pygame.image.load("graphics/fcup.png").convert_alpha()
+rollmsg_img = pygame.image.load("graphics/rollmsg.png").convert_alpha()
 
 
 class Button:
@@ -33,24 +39,40 @@ class Button:
 
 
 # BUTTON INSTANCES ====================================================================================================
-exit_button = Button(1870, 10, exit_img, s=0.1)
-play_button = Button(40, 40, play_img, s=0.5)
-cup_sprite = Button(100, 500, cup_img, s=0.5)
-fcup_sprite = Button(100, 500, fcup_img, s=0.5)
+exit_button = Button(width * 0.97, height * 0.01, exit_img, s=0.1)
+play_button = Button(width * 0.01, height * 0.01, play_img, s=0.5)
+cup_sprite = Button(width * 0.4, height * 0.3, cup_img, s=0.7)
+fcup_sprite = Button(width * 0.4, height * 0.4, fcup_img, s=0.7)
+rollmsg = Button(width * 0.3, height * 0.9, rollmsg_img, s=0.7)
 
 
 # FUNCTIONS ===========================================================================================================
 
-
 def roll():
+    global cup
     keys = pygame.key.get_pressed()
     if keys[pygame.K_SPACE]:
-        return cup_sprite.draw()
+        if cup == 1:
+            pygame.time.wait(200)
+            cup = 2
+            return cup_sprite.draw()
+        else:
+            pygame.time.wait(200)
+            cup = 1
+            return fcup_sprite.draw()
+
     return exit_button.draw()
-    """pygame.display.update()
-    pygame.time.wait(500)
-    screen.blit(bg_img, (0, 0))
-    exit_button.draw()
-    fcup_sprite.draw()
+
+
+def updateScreen(drawAll):
+    for x in drawAll:
+        screen.blit(x[0], x[1])
     pygame.display.update()
-    pygame.time.wait(500)"""
+    clock.tick(60)
+
+
+def chooseDice(p1cup):
+    currentDFaces = []
+    for x in p1cup:
+        currentDFaces.append(x[random.randint(0, 5)])
+    return currentDFaces
